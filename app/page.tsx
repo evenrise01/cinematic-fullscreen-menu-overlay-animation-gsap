@@ -3,7 +3,7 @@ import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import Image from "next/image";
 
-//TODO: check why links only appear once with the menu animation then disappear
+//TODO: apply a better underline animation along with animate the links with text animation
 export default function Home() {
   useGSAP(() => {
     // DOM element selectors
