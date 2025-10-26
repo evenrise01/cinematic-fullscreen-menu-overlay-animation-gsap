@@ -3,6 +3,7 @@ import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import Image from "next/image";
 
+//TODO: check why links only appear once with the menu animation then disappear
 export default function Home() {
   useGSAP(() => {
     // DOM element selectors
@@ -11,7 +12,7 @@ export default function Home() {
     const menuOverlay = document.querySelector(".menu-overlay");
     const menuContent = document.querySelector(".menu-content");
     const menuPreviewImg = document.querySelector(".menu-preview-img");
-    const menuLinks = document.querySelectorAll(".link a")
+    const menuLinks = document.querySelectorAll(".link a");
     let isMenuOpen = false;
     let isAnimating = false;
 
@@ -150,7 +151,7 @@ export default function Home() {
         onComplete: () => {
           isMenuOpen = false;
           isAnimating = false;
-          gsap.set([".link a", ".social, a"], { y: "120" });
+          gsap.set([".link a", ".social a"], { y: "120%", opacity: 0.25 });
           resetPreviewImg();
         },
       });
@@ -158,19 +159,23 @@ export default function Home() {
 
     menuLinks?.forEach((link) => {
       link.addEventListener("mouseover", () => {
-        if(!isMenuOpen || isAnimating) return;
+        if (!isMenuOpen || isAnimating) return;
 
-        const imgSrc = link.getAttribute("data-img")
-        if(!imgSrc) return;
+        const imgSrc = link.getAttribute("data-img");
+        if (!imgSrc) return;
 
         const previewImages = menuPreviewImg?.querySelectorAll("img");
-        if(previewImages.length > 0 && previewImages[previewImages.length - 1].src.endsWith(imgSrc))
+        if (
+          previewImages &&
+          previewImages.length > 0 &&
+          previewImages[previewImages.length - 1].src.endsWith(imgSrc)
+        )
           return;
 
-        const newPreviewImg = document.createElement("img")
+        const newPreviewImg = document.createElement("img");
         newPreviewImg.src = imgSrc;
         newPreviewImg.style.opacity = "0";
-        newPreviewImg.style.transform  = "scale(1.25) rotate(10deg)";
+        newPreviewImg.style.transform = "scale(1.25) rotate(10deg)";
 
         menuPreviewImg?.appendChild(newPreviewImg);
         cleanupPreviewImages();
@@ -178,12 +183,11 @@ export default function Home() {
         gsap.to(newPreviewImg, {
           opacity: 1,
           scale: 1,
-          rotation : 0,
+          rotation: 0,
           duration: 0.75,
-          ease: "power2.out"
-
-        })
-      })
+          ease: "power2.out",
+        });
+      });
     });
   }, {});
   return (
