@@ -177,6 +177,11 @@ nav {
   justify-content: space-between;
 }
 
+.menu-footer a {
+  transform: translateY(0) !important;
+  opacity: 1 !important;
+}
+
 .link a::after,
 .social a::after,
 .menu-footer a::after {
@@ -188,13 +193,13 @@ nav {
   height: 2px;
   background: #fff;
   transform: scaleX(0);
-  transform-origin: right;
+  transform-origin: left;
   transition: transform 0.3 cubic-bezier(0.6, 0, 0.4, 1);
 }
 
-.link a::after,
-.social a::after,
-.menu-footer a::after {
+.link a:hover::after,
+.social a:hover::after,
+.menu-footer a:hover::after {
   transform: scaleX(1);
   transform-origin: left;
 }
